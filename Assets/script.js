@@ -11,6 +11,7 @@ var searchInput = document.querySelector('.search-bar').value
 
 // Event listener for specifying whether to search in restaurants or in recipes
 searchBtn.addEventListener('click', function () {
+  resetSearch()
   var recDD = document.querySelector('.form-select.options');
   document.getElementById('results').style.display = "block";
   
@@ -43,12 +44,15 @@ function yelpApi() {
 
   };
 
-  fetch('https://cors-anywhere-jung.herokuapp.com/' + 'https://api.yelp.com/v3/businesses/search?location=ATL&sort_by=best_match&limit=15', options)
+  fetch(`https://cors-anywhere-jung.herokuapp.com/' + 'https://api.yelp.com/v3/businesses/search?location=ATL&sort_by=best_match&limit=15`, options)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
-      displaySearch(data);
+      console.log(data)
+
+     // displaySearch(data);
+      console.log("hi")
     })
 }
 
@@ -118,9 +122,17 @@ searchBtn.addEventListener('click', function () {
   var savedSearches = document.getElementById('search-query').value;
   localStorage.setItem('searches', JSON.stringify(savedSearches));
 })
+function resetSearch(){
+  while(mainTable.firstChild){
+    mainTable.removeChild(mainTable.firstChild)
+  }
+ }
 
 var searchList = localStorage.getItem('searches');
 document.getElementById('search1').innterHTML = searchList;
 
 var searchItem = JSON.parse(localStorage.getItem("searches"))
 $("#search1").text(searchItem);
+
+
+//searchInput.value
